@@ -24,7 +24,7 @@ class SampleData {
       Post(
         photo: 'assets/post1.png',
         theme: '2Adventure',
-        title: '2Hiking in the Andes',
+        title: 'Coding batak sa gabii',
         day: '15',
         month: 'October',
         year: '2023',

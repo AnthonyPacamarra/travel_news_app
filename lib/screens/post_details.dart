@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:travel_news_app/models/models.dart';
+import 'package:travel_news_app/screens/user_profile.dart';
 
 class PostDetailsScreen extends StatefulWidget {
+  final User user;
+
+  PostDetailsScreen({required this.user});
+
   @override
   _PostDetailsScreenState createState() => _PostDetailsScreenState();
 }
@@ -19,7 +25,16 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             children: [
               CarouselSlider(
                 carouselController: _carouselController,
-                items: PostInfo.items,
+                items: widget.user.featuredList
+                    .map((featured) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(featured.photo),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ))
+                    .toList(),
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {
                     setState(() {
@@ -40,15 +55,15 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: PostInfo.items.map((item) {
-                int index = PostInfo.items.indexOf(item);
+              children: widget.user.featuredList.map((item) {
+                int index = widget.user.featuredList.indexOf(item);
                 return Container(
                   width: 12,
                   height: 12,
                   margin: EdgeInsets.symmetric(horizontal: 4),
                   decoration: BoxDecoration(
                     shape: index == _currentSlide
-                        ? BoxShape.rectangle
+                        ? BoxShape.rectangle 
                         : BoxShape.circle,
                     color: index == _currentSlide ? Colors.black : Colors.grey,
                   ),
@@ -65,30 +80,62 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: PostInfo(),
+            child: PostInfo(user: widget.user, currentSlide: _currentSlide),
           ),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 375,
+                  height: 82,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/nav.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
   }
 }
 
-
 class NavIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 50, // Adjust the width as needed
-          height: 50, // Adjust the height as needed
-          color: Colors.grey,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/back.png'), // Replace with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
         ),
         SizedBox(width: 215),
         Container(
           width: 50, // Adjust the width as needed
           height: 50, // Adjust the height as needed
-          color: Colors.grey,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                  'assets/bookmark.png'), // Replace 'assets/feature1.png' with your image path
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ],
     );
@@ -96,18 +143,10 @@ class NavIcon extends StatelessWidget {
 }
 
 class PostInfo extends StatelessWidget {
-  
-  static List<Widget> items = [
-    Container(
-      color: Colors.red,
-    ),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.blue,
-    ),
-  ];
+  final User user;
+  final int currentSlide;
+
+  PostInfo({required this.user, required this.currentSlide});
 
   @override
   Widget build(BuildContext context) {
@@ -124,14 +163,15 @@ class PostInfo extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-                top: 25,
-                left: 40,
-                right: 40), // Margin for the entire column
+              top: 25,
+              left: 40,
+              right: 40,
+            ), // Margin for the entire column
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Title',
+                  user.postsList[0].title,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 24,
@@ -139,43 +179,81 @@ class PostInfo extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                Container(
-                  width: 315,
-                  height: 54,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 14),
-                      Row(
-                        children: [
-                          SizedBox(width: 14),
-                          Container(
-                            width: 26,
-                            height: 26,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(width: 8),
-                          Text('Name'),
-                          Text(' • '),
-                          Text('Date'),
-                          Text(' • '),
-                          Text('8 min read'),
-                        ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => UserProfileScreen(user: user),
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    width: 315,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 14),
+                        Row(
+                          children: [
+                            SizedBox(width: 14),
+                            Container(
+                              width: 26,
+                              height: 26,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: NetworkImage(user.profilePicture),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              '${user.firstName} ${user.lastName}',
+                              style: TextStyle(
+                                color: Color(0xFF19202D),
+                                fontSize: 14, // Adjust the font size as needed
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(' • '),
+                            Text(
+                              '${user.postsList[0].month} '
+                              '${user.postsList[0].day}',
+                              style: TextStyle(
+                                color: Color(0xFF19202D),
+                                fontSize: 14, // Adjust the font size as needed
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(' • '),
+                            Text(
+                              '8 min read', // You can update this with the actual read time
+                              style: TextStyle(
+                                color: Color(0xFF19202D),
+                                fontSize: 14, // Adjust the font size as needed
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Just say anything, George, say whatever's natural, the first thing that comes to your mind. Take that you mutated son-of-a-bitch. My pine, why you. You space bastard, you killed a pine. You do? Yeah, it's 8:00. Hey, McFly, I thought I told you never",
+                  user.postsList[0].content,
                   style: TextStyle(
                     color: Color(0xFF19202D),
                     fontSize: 16,
                     fontFamily: 'Gellix',
                     fontWeight: FontWeight.w500,
+                    height: 1.2,
                   ),
                 )
               ],

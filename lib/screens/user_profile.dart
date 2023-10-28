@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:travel_news_app/models/models.dart';
 
 class UserProfileScreen extends StatelessWidget {
+  final User user;
+
+  UserProfileScreen({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,10 +14,10 @@ class UserProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserProfileHeader(),
+            UserProfileHeader(user: user),
             SizedBox(height: 20),
             Text(
-              'Every piece of chocolate I ever ate is getting back\nat me.. desserts are very revengeful..',
+              user.bio,
               style: TextStyle(
                 color: Color(0xFF9397A0),
                 fontSize: 12,
@@ -22,18 +27,19 @@ class UserProfileScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 33),
-            StatisticsContainer(),
+            StatisticsContainer(user: user),
             SizedBox(height: 30),
-            SectionTitle("Elly's Post"),
+            SectionTitle("${user.firstName}'s Posts"),
             SizedBox(height: 10),
             Expanded(
-              child: NewsArticleList(),
+              child: NewsArticleList(
+                  posts: user.postsList), // Pass the user's posts
             ),
             SizedBox(height: 30),
-            SectionTitle("Popular From Elly"),
+            SectionTitle("Popular From ${user.firstName}"),
             SizedBox(height: 20),
             ImageCarousel(),
-            SizedBox(height: 20,)
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -42,6 +48,10 @@ class UserProfileScreen extends StatelessWidget {
 }
 
 class UserProfileHeader extends StatelessWidget {
+  final User user;
+
+  UserProfileHeader({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,14 +63,20 @@ class UserProfileHeader extends StatelessWidget {
           Container(
             width: 70,
             height: 70,
-            color: Colors.grey,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(user.profilePicture),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 25),
               Text(
-                'Elly Byers',
+                '${user.firstName} ${user.lastName}',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -71,7 +87,7 @@ class UserProfileHeader extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                'Author & Writer',
+                user.work,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 12,
@@ -111,6 +127,10 @@ class FollowButton extends StatelessWidget {
 }
 
 class StatisticsContainer extends StatelessWidget {
+  final User user;
+
+  StatisticsContainer({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -123,11 +143,11 @@ class StatisticsContainer extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          StatisticItem('54.21k', 'Followers'),
-          CustomDivider(), // Use the custom divider
-          StatisticItem('54.21k', 'Posts'),
-          CustomDivider(), // Use the custom divider
-          StatisticItem('54.21k', 'Following'),
+          StatisticItem(user.followers, 'Followers'),
+          CustomDivider(),
+          StatisticItem(user.posts, 'Posts'),
+          CustomDivider(),
+          StatisticItem(user.following, 'Following'),
         ],
       ),
     );
@@ -203,6 +223,10 @@ class SectionTitle extends StatelessWidget {
 }
 
 class NewsArticleItem extends StatelessWidget {
+  final Post post; // Accept a post
+
+  NewsArticleItem({required this.post}); // Constructor to initialize the post
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -213,7 +237,7 @@ class NewsArticleItem extends StatelessWidget {
         children: [
           ArticleImage(),
           SizedBox(width: 10),
-          ArticleText(),
+          ArticleText(post: post), // Pass the post to ArticleText
         ],
       ),
     );
@@ -221,6 +245,10 @@ class NewsArticleItem extends StatelessWidget {
 }
 
 class NewsArticleList extends StatelessWidget {
+  final List<Post> posts; // Accept a list of posts
+
+  NewsArticleList({required this.posts}); // Constructor to initialize posts
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -228,11 +256,13 @@ class NewsArticleList extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          NewsArticleItem(),
-          SizedBox(height: 15),
-          NewsArticleItem(),
-          SizedBox(height: 15),
-          NewsArticleItem(),
+          for (var post in posts)
+            Column(
+              children: [
+                NewsArticleItem(post: post), // Pass the current post
+                SizedBox(height: 15),
+              ],
+            ),
         ],
       ),
     );
@@ -258,7 +288,13 @@ class ArticleImage extends StatelessWidget {
           child: Container(
             width: 90,
             height: 90,
-            color: Colors.grey,
+            decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/post1.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
         ),
       ],
@@ -267,6 +303,10 @@ class ArticleImage extends StatelessWidget {
 }
 
 class ArticleText extends StatelessWidget {
+  final Post post; // Accept a post
+
+  ArticleText({required this.post}); // Constructor to initialize the post
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -274,7 +314,7 @@ class ArticleText extends StatelessWidget {
       children: [
         SizedBox(height: 10),
         Text(
-          "News: Theme",
+          "News: ${post.theme}",
           style: TextStyle(
             color: Color(0xFF9397A0),
             fontSize: 10,
@@ -284,7 +324,7 @@ class ArticleText extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Text(
-          'Fifth Iranian paramilitary me...\nFifth Iranian paramilitary me...',
+          post.title, // Display the post's content
           style: TextStyle(
             color: Color(0xFF19202D),
             fontSize: 14,
@@ -299,7 +339,13 @@ class ArticleText extends StatelessWidget {
             Container(
               width: 16,
               height: 16,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/calendar.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
             ),
             SizedBox(width: 5),
             Text("16th May"),
@@ -307,7 +353,13 @@ class ArticleText extends StatelessWidget {
             Container(
               width: 16,
               height: 16,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/time.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
             ),
             SizedBox(width: 5),
             Text("09:32 pm"),
@@ -344,7 +396,13 @@ class CarouselItem extends StatelessWidget {
     return Container(
       width: 248,
       height: 143,
-      color: Colors.grey,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              'assets/featured1.png'), // Replace 'assets/feature1.png' with your image path
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

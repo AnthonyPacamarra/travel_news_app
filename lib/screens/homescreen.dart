@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_news_app/models/users.dart';
+import 'package:travel_news_app/screens/post_details.dart';
+import 'package:travel_news_app/screens/user_profile.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -9,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        color: Colors.yellow,
+        color: Color.fromARGB(255, 245, 245, 245),
         child: Column(
           children: [
             UserProfileHeader(formattedDate),
@@ -23,6 +26,23 @@ class HomeScreen extends StatelessWidget {
             SectionHeader('Short for you', 'View all'),
             SizedBox(height: 20),
             BoxList2(),
+            SizedBox(height: 12),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 375,
+                  height: 82,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/nav.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -44,7 +64,13 @@ class UserProfileHeader extends StatelessWidget {
           Container(
             width: 50,
             height: 50,
-            color: Colors.blue,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/dp.png'), // Replace 'assets/feature1.png' with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Column(
@@ -84,14 +110,48 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Search',
-          prefixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white, // You can change the color as needed
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search for an article',
+                border: InputBorder.none, // Remove the border here
+                contentPadding:
+                    EdgeInsets.all(16), // Adjust the padding as needed
+              ),
+            ),
           ),
-        ),
+          Positioned(
+            right: 0, // Adjust the position as needed
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.blue, // Change the color as needed
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/search.png'), // Replace 'assets/feature1.png' with your image path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -156,58 +216,121 @@ class BoxList extends StatelessWidget {
           Container(
             width: 255,
             height: 304,
-            color: Colors.brown,
+            color: Color.fromARGB(255, 255, 255, 255),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoxWidget(231, 164),
-                  SizedBox(height: 18),
-                  Text(
-                    'Feel the thrill on the only\nsurf simulator in Maldives',
-                    style: TextStyle(
-                      color: Color(0xFF19202D),
-                      fontSize: 15,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailsScreen(
+                            user: SampleData.user1,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 231,
+                          height: 164,
+                          child: Image.network(
+                            SampleData.user1.postsList[0].photo,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 18),
+                        Text(
+                          SampleData.user1.postsList[0].title,
+                          style: TextStyle(
+                            color: Color(0xFF19202D),
+                            fontSize: 15,
+                            fontFamily: 'Gellix',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
                   Row(
                     children: [
-                      BoxWidget(38, 38),
-                      SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sang Dong-Min',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to UserProfile screen and pass the user
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  UserProfileScreen(user: SampleData.user1),
                             ),
-                          ),
-                          Text(
-                            'Sept 9,2022',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w400,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Image.network(
+                                  SampleData.user1.profilePicture,
+                                  width: 38,
+                                  height: 38,
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${SampleData.user1.firstName} ${SampleData.user1.lastName}',
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      SampleData.user1.postsList[0].day +
+                                          ' ' +
+                                          SampleData.user1.postsList[0].month +
+                                          ', ' +
+                                          SampleData.user1.postsList[0].year,
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                          )
-                        ],
+                            SizedBox(width: 50),
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 37,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 55),
-                      Stack(
-                        children: [BoxWidget(37, 37)],
-                      )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -216,58 +339,121 @@ class BoxList extends StatelessWidget {
           Container(
             width: 255,
             height: 304,
-            color: Colors.brown,
+            color: Color.fromARGB(255, 255, 255, 255),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoxWidget(231, 164),
-                  SizedBox(height: 18),
-                  Text(
-                    'Feel the thrill on the only\nsurf simulator in Maldives',
-                    style: TextStyle(
-                      color: Color(0xFF19202D),
-                      fontSize: 15,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailsScreen(
+                            user: SampleData.user2,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 231,
+                          height: 164,
+                          child: Image.network(
+                            SampleData.user2.postsList[0].photo,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 18),
+                        Text(
+                          SampleData.user2.postsList[0].title,
+                          style: TextStyle(
+                            color: Color(0xFF19202D),
+                            fontSize: 15,
+                            fontFamily: 'Gellix',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
                   Row(
                     children: [
-                      BoxWidget(38, 38),
-                      SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sang Dong-Min',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to UserProfile screen and pass the user
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  UserProfileScreen(user: SampleData.user2),
                             ),
-                          ),
-                          Text(
-                            'Sept 9,2022',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w400,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Image.network(
+                                  SampleData.user1.profilePicture,
+                                  width: 38,
+                                  height: 38,
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${SampleData.user1.firstName} ${SampleData.user1.lastName}',
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      SampleData.user2.postsList[0].day +
+                                          ' ' +
+                                          SampleData.user2.postsList[0].month +
+                                          ', ' +
+                                          SampleData.user2.postsList[0].year,
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                          )
-                        ],
+                            SizedBox(width: 50),
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 37,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 55),
-                      Stack(
-                        children: [BoxWidget(37, 37)],
-                      )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -276,64 +462,126 @@ class BoxList extends StatelessWidget {
           Container(
             width: 255,
             height: 304,
-            color: Colors.brown,
+            color: Color.fromARGB(255, 255, 255, 255),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoxWidget(231, 164),
-                  SizedBox(height: 18),
-                  Text(
-                    'Feel the thrill on the only\nsurf simulator in Maldives',
-                    style: TextStyle(
-                      color: Color(0xFF19202D),
-                      fontSize: 15,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailsScreen(
+                            user: SampleData.user3,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 231,
+                          height: 164,
+                          child: Image.network(
+                            SampleData.user3.postsList[0].photo,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 18),
+                        Text(
+                          SampleData.user3.postsList[0].title,
+                          style: TextStyle(
+                            color: Color(0xFF19202D),
+                            fontSize: 15,
+                            fontFamily: 'Gellix',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
                   Row(
                     children: [
-                      BoxWidget(38, 38),
-                      SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sang Dong-Min',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to UserProfile screen and pass the user
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  UserProfileScreen(user: SampleData.user3),
                             ),
-                          ),
-                          Text(
-                            'Sept 9,2022',
-                            style: TextStyle(
-                              color: Color(0xFF19202D),
-                              fontSize: 12,
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w400,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Image.network(
+                                  SampleData.user3.profilePicture,
+                                  width: 38,
+                                  height: 38,
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${SampleData.user3.firstName} ${SampleData.user3.lastName}',
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      SampleData.user3.postsList[0].day +
+                                          ' ' +
+                                          SampleData.user3.postsList[0].month +
+                                          ', ' +
+                                          SampleData.user3.postsList[0].year,
+                                      style: TextStyle(
+                                        color: Color(0xFF19202D),
+                                        fontSize: 12,
+                                        fontFamily: 'Gellix',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                          )
-                        ],
+                            SizedBox(width: 50),
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 37,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 55),
-                      Stack(
-                        children: [BoxWidget(37, 37)],
-                      )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
           ),
           SizedBox(width: 20),
-
         ],
       ),
     );
@@ -348,14 +596,39 @@ class BoxList2 extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          SizedBox(width: 20),
-          BoxWidget(208, 88),
-          SizedBox(width: 20),
-          BoxWidget(208, 88),
-          SizedBox(width: 20),
-          BoxWidget(208, 88),
-          SizedBox(width: 20),
-          BoxWidget(208, 88),
+          Container(
+            width: 208,
+            height: 88,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            width: 208,
+            height: 88,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            width: 208,
+            height: 88,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           SizedBox(width: 20),
         ],
       ),
@@ -376,22 +649,6 @@ class TagText extends StatelessWidget {
         color: Colors.black,
         fontSize: 14,
       ),
-    );
-  }
-}
-
-class BoxWidget extends StatelessWidget {
-  final double width;
-  final double height;
-
-  BoxWidget(this.width, this.height);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      color: Colors.grey,
     );
   }
 }

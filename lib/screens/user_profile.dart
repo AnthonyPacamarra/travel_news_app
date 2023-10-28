@@ -32,8 +32,7 @@ class UserProfileScreen extends StatelessWidget {
             SectionTitle("${user.firstName}'s Posts"),
             SizedBox(height: 10),
             Expanded(
-              child: NewsArticleList(
-                  posts: user.postsList), // Pass the user's posts
+              child: NewsArticleList(posts: user.postsList),
             ),
             SizedBox(height: 30),
             SectionTitle("Popular From ${user.firstName}"),
@@ -223,9 +222,9 @@ class SectionTitle extends StatelessWidget {
 }
 
 class NewsArticleItem extends StatelessWidget {
-  final Post post; // Accept a post
+  final Post post;
 
-  NewsArticleItem({required this.post}); // Constructor to initialize the post
+  NewsArticleItem({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +236,7 @@ class NewsArticleItem extends StatelessWidget {
         children: [
           ArticleImage(),
           SizedBox(width: 10),
-          ArticleText(post: post), // Pass the post to ArticleText
+          ArticleText(post: post),
         ],
       ),
     );
@@ -245,9 +244,9 @@ class NewsArticleItem extends StatelessWidget {
 }
 
 class NewsArticleList extends StatelessWidget {
-  final List<Post> posts; // Accept a list of posts
+  final List<Post> posts;
 
-  NewsArticleList({required this.posts}); // Constructor to initialize posts
+  NewsArticleList({required this.posts});
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +258,7 @@ class NewsArticleList extends StatelessWidget {
           for (var post in posts)
             Column(
               children: [
-                NewsArticleItem(post: post), // Pass the current post
+                NewsArticleItem(post: post),
                 SizedBox(height: 15),
               ],
             ),
@@ -289,12 +288,11 @@ class ArticleImage extends StatelessWidget {
             width: 90,
             height: 90,
             decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/post1.png'), // Replace 'assets/feature1.png' with your image path
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+              image: DecorationImage(
+                image: AssetImage('assets/post1.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
       ],
@@ -303,9 +301,9 @@ class ArticleImage extends StatelessWidget {
 }
 
 class ArticleText extends StatelessWidget {
-  final Post post; // Accept a post
+  final Post post;
 
-  ArticleText({required this.post}); // Constructor to initialize the post
+  ArticleText({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -324,7 +322,7 @@ class ArticleText extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Text(
-          post.title, // Display the post's content
+          post.title,
           style: TextStyle(
             color: Color(0xFF19202D),
             fontSize: 14,
@@ -340,12 +338,11 @@ class ArticleText extends StatelessWidget {
               width: 16,
               height: 16,
               decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/calendar.png'), // Replace 'assets/feature1.png' with your image path
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                image: DecorationImage(
+                  image: AssetImage('assets/calendar.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             SizedBox(width: 5),
             Text("16th May"),
@@ -354,12 +351,11 @@ class ArticleText extends StatelessWidget {
               width: 16,
               height: 16,
               decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/time.png'), // Replace 'assets/feature1.png' with your image path
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                image: DecorationImage(
+                  image: AssetImage('assets/time.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             SizedBox(width: 5),
             Text("09:32 pm"),
@@ -398,8 +394,7 @@ class CarouselItem extends StatelessWidget {
       height: 143,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-              'assets/featured1.png'), // Replace 'assets/feature1.png' with your image path
+          image: AssetImage('assets/featured1.png'),
           fit: BoxFit.cover,
         ),
       ),

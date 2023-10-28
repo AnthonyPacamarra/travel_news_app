@@ -91,7 +91,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                          'assets/nav.png'), // Replace 'assets/feature1.png' with your image path
+                          'assets/nav.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -119,7 +119,7 @@ class NavIcon extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/back.png'), // Replace with your image path
+                    'assets/back.png'), 
                 fit: BoxFit.cover,
               ),
             ),
@@ -127,12 +127,12 @@ class NavIcon extends StatelessWidget {
         ),
         SizedBox(width: 215),
         Container(
-          width: 50, // Adjust the width as needed
-          height: 50, // Adjust the height as needed
+          width: 50, 
+          height: 50,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                  'assets/bookmark.png'), // Replace 'assets/feature1.png' with your image path
+                  'assets/bookmark.png'), 
               fit: BoxFit.cover,
             ),
           ),
@@ -166,7 +166,7 @@ class PostInfo extends StatelessWidget {
               top: 25,
               left: 40,
               right: 40,
-            ), // Margin for the entire column
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -216,7 +216,7 @@ class PostInfo extends StatelessWidget {
                               '${user.firstName} ${user.lastName}',
                               style: TextStyle(
                                 color: Color(0xFF19202D),
-                                fontSize: 14, // Adjust the font size as needed
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -226,16 +226,16 @@ class PostInfo extends StatelessWidget {
                               '${user.postsList[0].day}',
                               style: TextStyle(
                                 color: Color(0xFF19202D),
-                                fontSize: 14, // Adjust the font size as needed
+                                fontSize: 14, 
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                             Text(' • '),
                             Text(
-                              '8 min read', // You can update this with the actual read time
+                              '8 min read', 
                               style: TextStyle(
                                 color: Color(0xFF19202D),
-                                fontSize: 14, // Adjust the font size as needed
+                                fontSize: 14, 
                                 fontWeight: FontWeight.w400,
                               ),
                             ),

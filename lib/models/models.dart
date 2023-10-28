@@ -1,12 +1,12 @@
 class User {
-  String profilePicture; // image URL
+  String profilePicture;
   String firstName;
   String lastName;
   String work;
   String bio;
-  String followers; // text
-  String posts; // text
-  String following; // text
+  String followers;
+  String posts;
+  String following;
   List<Post> postsList = [];
   List<Featured> featuredList = [];
 
@@ -25,13 +25,13 @@ class User {
 }
 
 class Post {
-  String photo; // image URL
+  String photo;
   String theme;
   String title;
-  String day; // text
-  String month; // text
-  String year; // text
-  String time; // text
+  String day;
+  String month;
+  String year;
+  String time;
   String content;
 
   Post({
@@ -47,7 +47,7 @@ class Post {
 }
 
 class Featured {
-  String photo; // image URL
+  String photo;
 
   Featured({
     required this.photo,

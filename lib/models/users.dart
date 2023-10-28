@@ -41,13 +41,11 @@ class SampleData {
         time: '09:45 AM',
         content: '3Amazing hike through the Andes mountains.',
       ),
-      // Add more posts here if needed
     ],
     featuredList: [
       Featured(photo: 'assets/post1.png'),
       Featured(photo: 'assets/post1.png'),
       Featured(photo: 'assets/post1.png'),
-      // Add more featured items here if needed
     ],
   );
 
@@ -91,13 +89,11 @@ class SampleData {
         time: '03:30 PM',
         content: 'Tasting delicious street food in Bangkok.',
       ),
-      // Add more posts here if needed
     ],
     featuredList: [
       Featured(photo: 'assets/post1.png'),
       Featured(photo: 'assets/post1.png'),
       Featured(photo: 'assets/post1.png'),
-      // Add more featured items here if needed
     ],
   );
 
@@ -141,13 +137,11 @@ class SampleData {
         time: '07:15 PM',
         content: 'Photographing a stunning sunset in Santorini.',
       ),
-      // Add more posts here if needed
     ],
     featuredList: [
       Featured(photo: 'assets/post1.png.'),
       Featured(photo: 'assets/post1.png.'),
       Featured(photo: 'assets/post1.png.'),
-      // Add more featured items here if needed
     ],
   );
 }

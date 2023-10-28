@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                          'assets/nav.png'), // Replace 'assets/feature1.png' with your image path
+                          'assets/nav.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,7 +67,7 @@ class UserProfileHeader extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/dp.png'), // Replace 'assets/feature1.png' with your image path
+                    'assets/dp.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -114,25 +114,25 @@ class SearchBar extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white, // You can change the color as needed
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search for an article',
-                border: InputBorder.none, // Remove the border here
+                border: InputBorder.none,
                 contentPadding:
-                    EdgeInsets.all(16), // Adjust the padding as needed
+                    EdgeInsets.all(16),
               ),
             ),
           ),
           Positioned(
-            right: 0, // Adjust the position as needed
+            right: 0,
             child: Container(
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.blue, // Change the color as needed
+                color: Colors.blue,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -143,7 +143,7 @@ class SearchBar extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                          'assets/search.png'), // Replace 'assets/feature1.png' with your image path
+                          'assets/search.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -262,7 +262,6 @@ class BoxList extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigate to UserProfile screen and pass the user
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
@@ -319,7 +318,7 @@ class BoxList extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                          'assets/send.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -385,7 +384,6 @@ class BoxList extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigate to UserProfile screen and pass the user
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
@@ -398,7 +396,7 @@ class BoxList extends StatelessWidget {
                             Row(
                               children: [
                                 Image.network(
-                                  SampleData.user1.profilePicture,
+                                  SampleData.user2.profilePicture,
                                   width: 38,
                                   height: 38,
                                   fit: BoxFit.cover,
@@ -408,7 +406,7 @@ class BoxList extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${SampleData.user1.firstName} ${SampleData.user1.lastName}',
+                                      '${SampleData.user2.firstName} ${SampleData.user2.lastName}',
                                       style: TextStyle(
                                         color: Color(0xFF19202D),
                                         fontSize: 12,
@@ -442,7 +440,7 @@ class BoxList extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                          'assets/send.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -508,7 +506,6 @@ class BoxList extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigate to UserProfile screen and pass the user
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
@@ -565,7 +562,7 @@ class BoxList extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          'assets/send.png'), // Replace 'assets/feature1.png' with your image path
+                                          'assets/send.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -602,7 +599,7 @@ class BoxList2 extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                    'assets/shorts.png'), 
                 fit: BoxFit.cover,
               ),
             ),
@@ -613,7 +610,7 @@ class BoxList2 extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                    'assets/shorts.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -624,7 +621,7 @@ class BoxList2 extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/shorts.png'), // Replace 'assets/feature1.png' with your image path
+                    'assets/shorts.png'),
                 fit: BoxFit.cover,
               ),
             ),
